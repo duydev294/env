@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    container_name: app
+    image: bkres_js
+    volumes:
+      - ./:/app
+      - /home/node/app/node_modules
+    environment:
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - ACCESS_REFTOKEN_SECRET= ${ACCESS_REFTOKEN_SECRET}
+      - PORT=${PORT}
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=${DB_NAME}
+
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo 
+    image: mongo 
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27018:27017"
